@@ -1,9 +1,11 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import axios from "axios";
 
 export default function Write() {
+  let navigate = useNavigate();
   const onSubmit = e => {
     e.preventDefault();
 
@@ -14,17 +16,16 @@ export default function Write() {
         content: e.target.content.value,
       })
       .then(response => {
-        console.log(response.data);
+        navigate("/");
       })
       .catch(error => {
         console.error(error);
       })
-      .finally(() => {
-        console.log("Request completed");
-      });
+      .finally(() => {});
   };
   return (
     <>
+      <h2 className="mb-3">글 쓰기</h2>
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>글쓴이</Form.Label>
