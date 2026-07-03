@@ -20,6 +20,7 @@ function App() {
   const handleCancel = () => {
     setBoardId(0);
     setIsModifyMode(false);
+    navigate("/");
   };
 
   return (
