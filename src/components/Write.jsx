@@ -49,6 +49,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     const name = e.target.name.value.trim();
     const title = e.target.title.value.trim();
     const content = e.target.content.value.trim();
+
     if (!name || !title || !content) {
       alert("모든 내용을 작성해주세요");
       return null;
@@ -63,8 +64,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
   const write = e => {
     e.preventDefault();
     const formData = validate(e);
-    if (!formdata) return;
-
+    if (!formData) return;
     axios
       .post("http://localhost:3000/write", formData)
       .then(response => {
@@ -75,11 +75,10 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
       })
       .finally(() => {});
   };
-
   const update = e => {
     e.preventDefault();
     const formData = validate(e);
-    if (!formdata) return;
+    if (!formData) return;
     axios
       .post("http://localhost:3000/update", {
         ...formData,
@@ -98,7 +97,6 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
   const handleClick = () => {
     handleCancel();
     navigate("/");
-    // navigate(`/view/${boardId}`);
   };
   return (
     <>
@@ -146,7 +144,6 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     </>
   );
 }
-
 // import Form from "react-bootstrap/Form";
 // import Button from "react-bootstrap/Button";
 // import { useState, useEffect } from "react";
