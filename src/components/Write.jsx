@@ -66,17 +66,20 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     };
   };
 
-  const createFormData = validatedData => {
+  const createFormData = (validatedData, id) => {
     const formData = new FormData();
     formData.append("writer", validatedData.name);
     formData.append("title", validatedData.title);
     formData.append("content", validatedData.content);
 
+    if (id) {
+      formData.append("id", id);
+    }
+
     if (content.image) {
       // 새 이미지
       formData.append("image", content.image);
     }
-    return formData;
 
     if (removeImage) {
       // 기존 이미지 지운다 true
@@ -109,19 +112,15 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     const validatedData = validate(e);
     if (!validatedData) return;
 
-    const formData = createFormData(validatedData);
-
+    const formData = createFormData(validatedData, boardId);
+    console.log(formData);
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
     axios
-      .post(
-        "http://localhost:3000/update",
-        {
-          ...formData,
-          id: boardId,
-        },
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        },
-      )
+      .post("http://localhost:3000/update", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then(() => {
         handleCancel();
         navigate("/");
