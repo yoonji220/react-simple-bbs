@@ -67,6 +67,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     formData.append("writer", validatedData.name);
     formData.append("title", validatedData.title);
     formData.append("content", validatedData.content);
+
     if (content.image) {
       formData.append("image", content.image);
     }
@@ -78,7 +79,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     const validatedData = validate(e);
     if (!validatedData) return;
 
-    const formData = crdateFormDaata(validatedData);
+    const formData = createFormData(validatedData);
 
     axios
       .post("http://localhost:3000/write", formData, {
@@ -97,7 +98,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     const validatedData = validate(e);
     if (!validatedData) return;
 
-    const formData = crdateFormDaata(validatedData);
+    const formData = createFormData(validatedData);
 
     axios
       .post(
@@ -132,7 +133,6 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
       image: file,
     }));
   };
-
   return (
     <>
       <h2 className="mb-3">{isModifyMode ? "글수정" : "글쓰기"}</h2>
