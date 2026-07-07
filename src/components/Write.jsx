@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Write({ isModifyMode, boardId, handleCancel }) {
   let navigate = useNavigate();
   const [content, setContent] = useState({
@@ -19,7 +21,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     if (isModifyMode && boardId) {
       //boardId로 서버에 글 조회, 조회결과로 content 업데이트
       axios
-        .get(`http://localhost:3000/view?id=${boardId}`)
+        .get(`${API_URL}/view?id=${boardId}`)
         .then(response => {
           console.log(response.data); //[{..}]
           //setContent(response.data);
@@ -96,7 +98,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     const formData = createFormData(validatedData);
 
     axios
-      .post("http://localhost:3000/write", formData, {
+      .post(`${API_URL}/write`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(response => {
@@ -118,7 +120,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
       console.log(key, value);
     }
     axios
-      .post("http://localhost:3000/update", formData, {
+      .post(`${API_URL}/update`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(() => {
@@ -188,7 +190,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
         {content.image_path && (
           <div>
             <img
-              src={`http://localhost:3000/${content.image_path}`}
+              src={`${API_URL}/${content.image_path}`}
               alt={content.title}
               style={{ maxWidth: "200px" }}
             />
